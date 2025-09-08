@@ -54,5 +54,105 @@ function farewellCustomer(name: string){
 
 //? import type { User, Post } from "./models";
 
-// Unions
+// Unions: When a value coud be one of several types. One really cool thing about TS is that conditional checks actually change the type of a variable. This is called "Type Narrowing".
 
+function safeSquare(id: string | number): number{
+    if (typeof id === "string") {
+        id = parseInt(id, 10);
+    }
+    // Now id is only a number
+    return id * id
+}
+
+// If it's union than it's good to narrow it down.
+function getTicketInfo(id: string| number) {
+    if (typeof id === 'string') {
+        id.toLowerCase() // You cannot do this for number, that's why we have narrow it down to the string
+
+        const parsedID = id.split("-")[1]
+        const numberId = parseInt(parsedID)
+        return `processing ticket: ${numberId}`
+    }
+    return `Processing ticket: ${id}`
+}
+
+// Optional Parameters: You can specify function parameters as optional with a (?) after the name:
+
+//Optional Paramters has to be at the end of the function
+function calculateApiCost(numReqs:number, tier?: string) {
+    // double == null checks if it's null or undefined
+    
+    if (tier === 'pro'){
+        return numReqs * .05
+    }
+
+    if (tier === "enterprise") {
+        return numReqs * .03;
+    }
+
+    return numReqs * .1
+}
+
+// Default Parameters
+function estimateResponseTime(promptLength: number = 100, modelType: string = 'text') {
+    
+    let baseNumber = 0;
+    let rateNumber = 0;
+    
+    if (modelType === "text") {
+        baseNumber = 2;
+        rateNumber = 0.1;
+        // return 2 + 0.1 * promptLength;
+    } else if (modelType === "image") {
+        baseNumber = 5;
+        rateNumber = 0.02
+    } else if (modelType === "code") {
+        baseNumber = 3;
+        rateNumber = 0.05;
+    }
+
+    return Math.round(baseNumber + rateNumber * promptLength)
+
+}
+
+// Literal Types: Specific type with specific values
+// A function that takes one of 3 specific string values as an argument.
+
+// Value Unions
+
+export type Priority = "low" | "medium" | "high" | "critical";
+
+export function setPriority(level : Priority) {
+    switch (level) {
+        case "low":
+            return 0
+        case "medium":
+            return 1
+        case "high":
+            return 2
+        case "critical":
+            return 3
+        default:
+            return 0
+    }
+}
+
+// Super Set Unions
+// Take some set of literal values and add them on more values, so that we can have a set-up values as well as any values that falls in a specific value range.
+
+export type EmploymentStatus = "employed" | "unemployed" | "student" | string
+
+updateEmploymentStatus("employed");
+
+export function updateEmploymentStatus(status: EmploymentStatus) {
+    return `Employment status updated: ${status}`;
+}
+
+type LogLevel = "info" | "warn" | "error";
+type LogSourceType = "api" | "database" | "auth";
+type LogMessage = `${LogLevel}: ${string | number }`
+type Logsource = `${LogSourceType}_${number}`;
+
+export function createLogEntry(message: LogMessage, source:LogSourceType) {
+    return `[${source}] Log - ${message}`;
+}
