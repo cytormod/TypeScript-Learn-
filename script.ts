@@ -156,3 +156,22 @@ type Logsource = `${LogSourceType}_${number}`;
 export function createLogEntry(message: LogMessage, source:LogSourceType) {
     return `[${source}] Log - ${message}`;
 }
+
+//Arrays
+export function averageScore (ratings: number[]) {
+    if (ratings.length === 0) return 0;
+    return ratings.reduce((rating, sum) => {
+        return rating + sum;
+    }, 0) / ratings.length;
+}
+
+ // Another Options for mentioning Array
+//  Array <string>
+
+//Heterogenous Arrays
+function interpolateComment(id: number, comment: string, comments: (string | number)[],
+) {
+    const index = comments.findIndex(c => c === id)
+    if (index === -1)
+    return comments[index] = comment
+}
