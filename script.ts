@@ -172,6 +172,25 @@ export function averageScore (ratings: number[]) {
 function interpolateComment(id: number, comment: string, comments: (string | number)[],
 ) {
     const index = comments.findIndex(c => c === id)
-    if (index === -1)
-    return comments[index] = comment
+    if (index === -1) return
+    comments[index] = comment
+}
+
+// Rest Parameters : Here for rest parameters in TS we need to make sure that rest parameter here that we always denote that it's going to be an array, because it's always takes in an array of values and it can be of any length between 0 and infinity essentially.
+
+function formatLabels(...labels: string[]) {
+    if (labels.length === 0) return "No labels"
+    if (labels.length === 1) return `Label: ${labels[0]}`
+    return `Labels: ${labels.join(", ")}`
+}
+
+// Any Type in Array: Arrays can have any values of we so not specifies anything there.
+
+function collectSupportData(id: number, resolved: boolean): [string, number, boolean]{
+    const supportData: [string, number, boolean]= [
+        'Support session started',
+        id,
+        resolved
+    ];
+    return supportData;
 }
