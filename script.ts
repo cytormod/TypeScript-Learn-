@@ -194,3 +194,27 @@ function collectSupportData(id: number, resolved: boolean): [string, number, boo
     ];
     return supportData;
 }
+
+//Object Literal Types
+
+type a = {
+    name: string
+}
+
+type Mail = {
+    from: string;
+    to: string[];
+    subject: string;
+    body: string;
+    urgent: boolean;
+}
+
+function processMail(mail: Mail) {
+    return `FROM: ${mail.from}
+    TO: ${mail.to};
+    SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
+    BODY: ${mail.body}`
+}
+
+// Extra properties
+
