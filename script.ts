@@ -257,4 +257,35 @@ function isCorrect(lesson: Lesson): boolean {
 }
 
 // 2
+// type Loading = { status: "loading"}
+// type Error = { status: "error", error: number}
+// type Sucess = { status: "status", data: string }
 
+type InternalAddress = {
+    kind: "internal",
+    firstName: string
+    lastName: string
+}
+
+type ExternalAddress = {
+    kind: 'external',
+    username: string
+    domain: string
+}
+
+type Addresss = InternalAddress | ExternalAddress;
+
+function formatAddresses(addresses: Addresss[]) {
+    let formatted = "";
+    for (const address of addresses) {
+        if (address.kind === "internal"){
+            formatted += `${address.firstName}.${address.lastName}@successed,`
+        }
+        if (address.kind === "external") {
+            formatted += `${address.username}@${address.domain}, `;
+        }
+    }
+    return formatted.slice(0, -2);
+}
+
+//! Sets
