@@ -289,3 +289,91 @@ function formatAddresses(addresses: Addresss[]) {
 }
 
 //! Sets
+
+function findNumUniqueLabels(formattedAddresses: string[]) {
+    const set = new Set(formattedAddresses)
+    return set.size;
+}
+const set = new Set<string>();
+set.add('a');
+
+// Maps
+function getfileLength(files: Map<string, string>, filename) {
+    const file = files.get(filename)
+    if (file == null) return 0
+    return new TextEncoder().encode(file).length;
+
+}
+
+const map = new Map<string, number>()
+
+// Dynamic Keys: It allows me to use dymnamic keys which can have a specific type and values
+
+const TWO_FACTOR = Symbol("twoFactor");
+const BIOMETRIC_LOCK = Symbol("biometricLock");
+
+type MailPreferences = {
+    [key: string]: string | boolean;
+    doNotDisturb: boolean;
+    outOfOffice: boolean;
+    [TWO_FACTOR]: boolean;
+    [BIOMETRIC_LOCK]: boolean;
+};
+
+function isSecure(preferences: MailPreferences) {
+    return preferences[TWO_FACTOR] || preferences[BIOMETRIC_LOCK];
+}
+
+// A Record inside of a TS is essentially just an object that's what it is defined, and we can specify two properties inside of it. One is key and the other is value.
+type MailPreferences2 = Record<string, boolean>;
+
+type MailPreferences3 = {
+    [key: PropertyKey]: boolean | string;
+    readonly doNotdisturb: boolean;
+    readonly outOfOffice: boolean;
+};
+
+// const a: MailPreferences = {
+//     sjsjsj: true,
+// }
+
+function setPreference(
+    preferences: MailPreferences,
+    key: string,
+    value: boolean,
+) {
+    const exists = key in preferences;
+    preferences[key] = value;
+    return exists;
+}
+
+// Dynamic Default properties: Values that arq 100% required and then everything is dynamic
+
+function canContact(preferences: MailPreferences): boolean{
+    return !(preferences.doNotDisturb || preferences.outOfOffice)
+}
+
+// REadOnly Modifier: Check MailPreferences3
+
+// AsConst adn Object.freeze property: it allows you to take something that would normally be a generic type and say that it is a very specific type that have a specific values in it.
+
+const defaultPreferences =  {
+    name: "Sahil",
+    doNotdisturb: false,
+    outOfOffice: false,
+} as const;
+
+//Object.freeze: It is kind of Similar to |"as const"| in simple term Object.freeze say that Object is immutable at least at the top-level, but not on the nesting.
+
+// Satisfies: It deals a lot with Object types as well as const type:
+// ! Example
+
+type A = {name: string}
+const a = {name: "Sahil"} as const satisfies A;
+// Here in the above example we are using satisfies keyword, so that we can make the const a constant or read-only property.
+
+const aa: A = {name: "Sahil"} as const
+// Here in the above example if I write like this it affects the type of aa from read-only to string
+
+//fuunction overloads: Multiple different definitions for the same function with different parameters that you can pass along.
+
