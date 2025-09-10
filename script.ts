@@ -204,6 +204,7 @@ type a = {
 type Mail = {
     from: string;
     to: string[];
+    cc?: string[];//Optional Property
     subject: string;
     body: string;
     urgent: boolean;
@@ -211,10 +212,49 @@ type Mail = {
 
 function processMail(mail: Mail) {
     return `FROM: ${mail.from}
-    TO: ${mail.to};
+    TO: ${mail.to.join(", ")};
+    CC: ${mail.cc?.join(",")}
     SUBJECT: ${mail.urgent ? "[URGENT] " : ""}${mail.subject}
     BODY: ${mail.body}`
 }
 
-// Extra properties
+// Empty Object Type: Everything in TS and JS is an Obect behind the scene except the null and undefined
+
+// ! Example
+// let a: Mail = {
+//     //So here a is a mail type
+// }
+
+type Address = {
+    name: string
+    domain: string
+}
+
+//Discriminated Unions: It is based on the larger types like Objects. These Objects are going to have a single property that is difference between each of different types
+
+type MultipeChouseLesson = {
+    kind: "multiple-choice"; //Discriminant property
+    question: string;
+    studentAnswer: string;
+    correctAnswer: string;
+};
+
+type CodingLesson = {
+    kind: "coding"; // Discriminant property
+    studentCode: string;
+    solutionCode: string;
+};
+
+type Lesson = MultipeChouseLesson | CodingLesson;
+
+function isCorrect(lesson: Lesson): boolean {
+    switch (lesson.kind) {
+        case "multiple-choice":
+            return lesson.studentAnswer === lesson.correctAnswer;
+        case "coding":
+            return lesson.studentCode === lesson.solutionCode;
+    }
+}
+
+// 2
 
